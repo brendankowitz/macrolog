@@ -1,0 +1,2 @@
+# macrolog
+Log macros
