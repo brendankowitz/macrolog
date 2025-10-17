@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "MacroLog",
+    "slug": "macrolog-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "owner": "your-expo-username",
+    "extra": {
+      "eas": {
+        "projectId": "93595aa1-0e5e-48ee-9219-c3cddb73a82f"
+      }
+    },
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.macrolog",
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "MacroLog needs access to Apple Health to read your nutrition data.",
+        "NSHealthUpdateUsageDescription": "MacroLog needs access to Apple Health to save your meal nutrition data (calories, protein, carbs, and fat).",
+        "NSCameraUsageDescription": "MacroLog needs camera access to take photos of your meals for nutrition analysis.",
+        "NSPhotoLibraryUsageDescription": "MacroLog needs photo library access to save your meal photos."
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": ["health-records"]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
