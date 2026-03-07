@@ -1,0 +1,7 @@
+{
+  "name": "macrolog-ionic-react",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

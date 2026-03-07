@@ -1,0 +1,362 @@
+/* ═══════════════════════════════════════
+   HOME PAGE — Apple Health / Fitness DNA
+═══════════════════════════════════════ */
+
+/* ── Safe area header ────────────────────── */
+.h-safe { height: max(env(safe-area-inset-top), 44px); }
+
+.h-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px var(--pad) 8px;
+}
+
+.h-titles { flex: 1; }
+
+.h-large-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.37px;
+  color: var(--label);
+  margin: 0 0 2px;
+  line-height: 1.12;
+}
+
+.h-date {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--label-2);
+  margin: 0;
+}
+
+.h-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.h-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--bg-inset);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sys-orange);
+}
+
+.h-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-inset);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--sys-blue);
+  font-size: 17px;
+}
+
+/* ── Activity card ───────────────────────── */
+.h-activity {
+  margin: 8px var(--pad) 0;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+}
+
+/* Ring */
+.h-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px 20px;
+}
+
+.h-ring-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 20px;
+}
+
+.h-ring-svg { display: block; }
+
+.h-ring-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.h-ring-cal {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--label);
+  line-height: 1;
+}
+
+.h-ring-of {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--label-2);
+  margin-top: 3px;
+}
+
+.h-ring-unit {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--label-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* Macros inside the activity card */
+.h-macros {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.h-macro-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.h-macro-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.h-macro-label {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--label);
+  width: 58px;
+  flex-shrink: 0;
+}
+
+.h-macro-bar-track {
+  flex: 1;
+  height: 5px;
+  background: var(--bg-inset);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.h-macro-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.h-macro-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label-2);
+  text-align: right;
+  min-width: 72px;
+}
+
+/* ── Log buttons ─────────────────────────── */
+.h-log-row {
+  display: flex;
+  gap: 10px;
+  margin: 10px var(--pad) 0;
+}
+
+.h-log-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  background: var(--sys-blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  transition: opacity 0.15s;
+  -webkit-appearance: none;
+}
+
+.h-log-btn:active { opacity: 0.75; }
+.h-log-btn:disabled { opacity: 0.4; }
+
+.h-log-btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 50px;
+  padding: 0 20px;
+  background: var(--bg-card);
+  color: var(--sys-blue);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  transition: opacity 0.15s;
+  -webkit-appearance: none;
+  white-space: nowrap;
+}
+
+.h-log-btn-secondary:active { opacity: 0.75; }
+.h-log-btn-secondary:disabled { opacity: 0.4; }
+
+/* ── Section ─────────────────────────────── */
+.h-section {
+  padding: 22px var(--pad) 0;
+}
+
+.h-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  color: var(--label);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ── Meal cards ──────────────────────────── */
+.h-meals-list {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.h-meal-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  position: relative;
+}
+
+.h-meal-row + .h-meal-row::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 76px; right: 0;
+  height: 0.5px;
+  background: var(--separator);
+}
+
+.h-meal-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg-inset);
+}
+
+.h-meal-placeholder {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: var(--bg-inset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--label-3);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.h-meal-body { flex: 1; min-width: 0; }
+
+.h-meal-time {
+  font-size: 12px;
+  color: var(--label-3);
+  margin-bottom: 2px;
+}
+
+.h-meal-cal {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--label);
+  letter-spacing: -0.2px;
+}
+
+.h-meal-cal-unit {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--label-2);
+}
+
+.h-meal-macros {
+  font-size: 13px;
+  color: var(--label-3);
+  margin-top: 2px;
+}
+
+.h-meal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+.h-meal-chevron {
+  color: var(--label-3);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── Empty state ─────────────────────────── */
+.h-empty {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.h-empty-icon {
+  font-size: 44px;
+  color: var(--label-3);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.h-empty-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--label);
+  margin-bottom: 6px;
+}
+
+.h-empty-sub {
+  font-size: 15px;
+  color: var(--label-2);
+  line-height: 1.5;
+}
+
+.h-bottom-pad { height: max(env(safe-area-inset-bottom), 20px); }

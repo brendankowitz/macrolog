@@ -1,0 +1,252 @@
+/* ═══════════════════════════════════════
+   SETTINGS — iOS Settings.app exact feel
+═══════════════════════════════════════ */
+
+.s-safe { height: max(env(safe-area-inset-top), 44px); }
+
+.s-header {
+  padding: 16px var(--pad) 8px;
+}
+
+.s-large-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.37px;
+  color: var(--label);
+  margin: 0;
+}
+
+.s-body {
+  padding: 0 var(--pad) 60px;
+}
+
+/* Section */
+.s-section {
+  margin-bottom: 28px;
+}
+
+.s-section-header {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--label-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 4px;
+  margin-bottom: 8px;
+}
+
+/* Grouped card */
+.s-group {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Row */
+.s-row {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  position: relative;
+  gap: 12px;
+}
+
+.s-row + .s-row::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 16px; right: 0;
+  height: 0.5px;
+  background: var(--separator);
+}
+
+.s-row-icon {
+  width: 29px;
+  height: 29px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+  color: white;
+}
+
+.s-row-label {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--label);
+}
+
+.s-row-value {
+  font-size: 17px;
+  color: var(--label-3);
+}
+
+.s-row-chevron {
+  color: var(--label-3);
+  font-size: 14px;
+}
+
+/* Input row */
+.s-input-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 12px 16px;
+}
+
+.s-input-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--label-2);
+  margin-bottom: 6px;
+}
+
+.s-input-wrap { position: relative; }
+
+.s-input {
+  width: 100%;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--label);
+  background: var(--bg-inset);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--ion-font-family);
+  outline: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  transition: background 0.15s;
+}
+
+.s-input:focus {
+  background: var(--bg-card2);
+  outline: 2px solid var(--sys-blue);
+  outline-offset: 0;
+}
+
+.s-input-mono { font-family: 'Menlo', 'SF Mono', monospace; font-size: 15px; }
+
+.s-eye-btn {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  cursor: pointer;
+  color: var(--label-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+/* Key configured badge */
+.s-key-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--sys-green);
+  font-weight: 500;
+}
+
+/* Goals grid */
+.s-goals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.s-goals-grid .s-input-row {
+  border-top: none;
+}
+
+.s-goals-grid .s-input-row + .s-input-row {
+  border-left: 0.5px solid var(--separator);
+}
+
+/* Primary action button */
+.s-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--radius);
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.15s;
+  -webkit-appearance: none;
+  letter-spacing: -0.2px;
+}
+
+.s-btn:active { opacity: 0.75; }
+.s-btn:disabled { opacity: 0.38; }
+
+.s-btn-blue { background: var(--sys-blue); color: white; }
+.s-btn-danger { background: var(--bg-card); color: var(--sys-red); }
+
+.s-link {
+  font-size: 15px;
+  color: var(--sys-blue);
+  text-decoration: none;
+}
+
+/* Footer */
+.s-footer {
+  padding: 32px 0 8px;
+  text-align: center;
+}
+
+.s-footer-icon {
+  font-size: 36px;
+  color: var(--label-3);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.s-footer-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label-3);
+}
+
+.s-footer-version {
+  font-size: 13px;
+  color: var(--label-3);
+  margin-top: 2px;
+}
+
+/* Toast */
+.s-toast {
+  position: fixed;
+  bottom: 76px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(50,50,52,0.92);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: toastPop 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes toastPop {
+  from { opacity: 0; transform: translateX(-50%) scale(0.88); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.s-bottom-pad { height: max(env(safe-area-inset-bottom), 20px); }

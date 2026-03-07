@@ -1,8 +1,12 @@
 import { FoodItem } from '../types';
 
-const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const MODELS = {
+  premium: 'qwen/qwen3.5-flash-02-23',
+  free: 'openrouter/auto:free',
+};
 
-interface OpenAIResponse {
+interface ChatResponse {
   choices: Array<{
     message: {
       content: string;
@@ -11,20 +15,26 @@ interface OpenAIResponse {
 }
 
 export const OpenAIService = {
-  /**
-   * Analyze a meal photo using OpenAI Vision API
-   * @param base64Image - Base64 encoded image
-   * @param apiKey - OpenAI API key
-   * @param userGoals - User's daily nutrition goals for context
-   * @returns Array of identified food items with nutrition and health data
-   */
   async analyzeMealPhoto(
-    base64Image: string,
+    base64Images: string[],
     apiKey: string,
-    userGoals: { calories: number; protein: number; carbs: number; fat: number }
+    userGoals: { calories: number; protein: number; carbs: number; fat: number },
+    analysisMode: 'premium' | 'free' = 'premium',
+    contextNotes?: string
   ): Promise<FoodItem[]> {
-    try {
-      const prompt = `Analyze this meal photo and return a JSON array of food items. For each item, provide:
+    const model = MODELS[analysisMode];
+
+    const contextClause = contextNotes?.trim()
+      ? `\n\nAdditional context from the user: "${contextNotes.trim()}"`
+      : '';
+
+    const multiPhotoNote = base64Images.length > 1
+      ? ` (${base64Images.length} photos showing different components or angles of the same meal)`
+      : '';
+
+    const prompt = `Analyze this meal${multiPhotoNote} and return a JSON array of food items.${contextClause}
+
+For each item provide:
 - name: descriptive name of the food
 - amount: estimated portion size as a number
 - unit: unit of measurement (oz, cup, g, piece, etc.)
@@ -38,127 +48,87 @@ export const OpenAIService = {
   - processingLevel: whole foods (high) vs processed foods (low)
   - goalAlignment: how well it fits user's goals (${userGoals.calories} cal, ${userGoals.protein}g protein, ${userGoals.carbs}g carbs, ${userGoals.fat}g fat)
 - healthReason: brief technical explanation of the scores (1 sentence)
-- encouragement: personalized, positive feedback highlighting benefits and gently noting areas for improvement if any (Oura Ring style, 1-2 sentences)
+- encouragement: personalized, positive feedback highlighting benefits and gently noting areas for improvement if any (1-2 sentences)
 
 Calculate healthScore as: (nutrientDensity * 0.33) + (processingLevel * 0.33) + (goalAlignment * 0.34)
 
-Return ONLY valid JSON array, no markdown or extra text.
+Return ONLY valid JSON array, no markdown or extra text.`;
 
-Examples of encouragement messages:
-- "Your protein shake is excellent for muscle recovery with 25g protein, though it's highly processed. Consider pairing with whole foods for added nutrients."
-- "Grilled chicken is a lean protein powerhouse! Great choice for meeting your goals."
-- "This pizza provides energy but is high in processed carbs and sodium. Balance it with vegetables or save room for a nutrient-dense meal later."`;
+    const imageContent = base64Images.map(b64 => ({
+      type: 'image_url' as const,
+      image_url: { url: `data:image/jpeg;base64,${b64}` },
+    }));
 
-      const response = await fetch(OPENAI_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o',
-          messages: [
-            {
-              role: 'user',
-              content: [
-                {
-                  type: 'text',
-                  text: prompt,
-                },
-                {
-                  type: 'image_url',
-                  image_url: {
-                    url: `data:image/jpeg;base64,${base64Image}`,
-                  },
-                },
-              ],
-            },
-          ],
-          max_tokens: 1500,
-          temperature: 0.3, // Lower temperature for more consistent results
-        }),
-      });
+    const response = await fetch(OPENROUTER_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://macrolog.app',
+        'X-Title': 'MacroLog',
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: prompt },
+              ...imageContent,
+            ],
+          },
+        ],
+        max_tokens: 1500,
+        temperature: 0.3,
+      }),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          `OpenAI API error: ${response.status} - ${errorData.error?.message || response.statusText}`
-        );
-      }
-
-      const data: OpenAIResponse = await response.json();
-      const content = data.choices[0]?.message?.content;
-
-      if (!content) {
-        throw new Error('No response from OpenAI');
-      }
-
-      // Parse JSON response
-      // Remove markdown code blocks if present
-      const jsonContent = content
-        .replace(/```json\n?/g, '')
-        .replace(/```\n?/g, '')
-        .trim();
-
-      let foodItems: FoodItem[];
-      try {
-        foodItems = JSON.parse(jsonContent);
-      } catch (parseError) {
-        console.error('JSON Parse Error:', parseError);
-        console.error('Content received:', jsonContent);
-        throw new Error(
-          `Failed to parse OpenAI response as JSON. Response: ${jsonContent.substring(0, 200)}`
-        );
-      }
-
-      // Validate that we got an array
-      if (!Array.isArray(foodItems)) {
-        throw new Error(
-          `Expected array of food items, got ${typeof foodItems}. Response: ${jsonContent.substring(0, 200)}`
-        );
-      }
-
-      // Add unique IDs to each item
-      return foodItems.map((item, index) => ({
-        ...item,
-        id: `${Date.now()}-${index}`,
-        editable: false,
-      }));
-    } catch (error) {
-      console.error('Error analyzing meal:', error);
-
-      if (error instanceof Error) {
-        // Re-throw with more context
-        if (error.message.includes('401')) {
-          throw new Error('Invalid API key. Please check your OpenAI API key in Settings.');
-        } else if (error.message.includes('429')) {
-          throw new Error('Rate limit exceeded. Please try again in a moment.');
-        } else if (error.message.includes('500') || error.message.includes('503')) {
-          throw new Error('OpenAI service temporarily unavailable. Please try again.');
-        }
-      }
-
-      throw error;
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const msg = (errorData as any).error?.message || (errorData as any).message || response.statusText;
+      console.error('OpenRouter error:', response.status, JSON.stringify(errorData));
+      if (response.status === 401) throw new Error(`Invalid API key — ${msg}`);
+      if (response.status === 402) throw new Error(`No credits on your OpenRouter account. Top up at openrouter.ai/credits.`);
+      if (response.status === 429) throw new Error(`Rate limit hit — ${msg}. Try again in a moment.`);
+      throw new Error(`OpenRouter ${response.status}: ${msg}`);
     }
+
+    const data: ChatResponse = await response.json();
+    const content = data.choices[0]?.message?.content;
+
+    if (!content) throw new Error('No response from AI model');
+
+    const jsonContent = content
+      .replace(/```json\n?/g, '')
+      .replace(/```\n?/g, '')
+      .trim();
+
+    let foodItems: FoodItem[];
+    try {
+      foodItems = JSON.parse(jsonContent);
+    } catch {
+      throw new Error(`Failed to parse AI response. Response: ${jsonContent.substring(0, 200)}`);
+    }
+
+    if (!Array.isArray(foodItems)) {
+      throw new Error(`Expected array of food items, got ${typeof foodItems}`);
+    }
+
+    return foodItems.map((item, index) => ({
+      ...item,
+      id: `${Date.now()}-${index}`,
+      editable: false,
+    }));
   },
 
-  /**
-   * Validate API key by making a simple test request
-   * @param apiKey - OpenAI API key to validate
-   * @returns true if valid, throws error if invalid
-   */
   async validateApiKey(apiKey: string): Promise<boolean> {
     try {
-      const response = await fetch('https://api.openai.com/v1/models', {
+      const response = await fetch('https://openrouter.ai/api/v1/models', {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-        },
+        headers: { 'Authorization': `Bearer ${apiKey}` },
       });
-
       return response.ok;
-    } catch (error) {
-      console.error('Error validating API key:', error);
+    } catch {
       return false;
     }
   },

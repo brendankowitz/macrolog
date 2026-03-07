@@ -1,0 +1,136 @@
+/* ═══════════════════════════════════════
+   Apple HIG System Colors + Ionic Tokens
+═══════════════════════════════════════ */
+
+:root {
+  /* ── Apple System Surfaces (Light) ──────── */
+  --bg:               #F2F2F7;   /* systemGroupedBackground */
+  --bg-card:          #FFFFFF;   /* secondarySystemGroupedBackground */
+  --bg-card2:         #F2F2F7;   /* tertiarySystemGroupedBackground */
+  --bg-inset:         rgba(118,118,128,0.12); /* systemFill */
+
+  /* ── Apple System Labels (Light) ───────── */
+  --label:            #000000;
+  --label-2:          rgba(60,60,67,0.60);
+  --label-3:          rgba(60,60,67,0.30);
+  --label-4:          rgba(60,60,67,0.18);
+  --separator:        rgba(60,60,67,0.29);
+
+  /* ── Apple System Colors ────────────────── */
+  --sys-blue:         #007AFF;
+  --sys-green:        #34C759;
+  --sys-orange:       #FF9500;
+  --sys-pink:         #FF2D55;
+  --sys-purple:       #AF52DE;
+  --sys-red:          #FF3B30;
+  --sys-teal:         #5AC8FA;
+  --sys-indigo:       #5856D6;
+
+  /* ── Macro / Nutrition Colors ───────────── */
+  --cal-color:        #FF375F;
+  --protein-color:    #30D158;
+  --carbs-color:      #FF9F0A;
+  --fat-color:        #BF5AF2;
+  --cal-track:        rgba(255,55,95,0.10);
+  --protein-track:    rgba(48,209,88,0.10);
+  --carbs-track:      rgba(255,159,10,0.10);
+  --fat-track:        rgba(191,90,242,0.10);
+
+  /* ── App Tint ────────────────────────────── */
+  --tint:             #007AFF;
+
+  /* ── Misc ───────────────────────────────── */
+  --radius:           12px;
+  --radius-sm:        8px;
+  --radius-lg:        16px;
+  --pad:              16px;
+
+  /* ── Ionic Overrides (Light) ────────────── */
+  --ion-background-color:           var(--bg);
+  --ion-background-color-rgb:       242,242,247;
+  --ion-text-color:                 var(--label);
+  --ion-text-color-rgb:             0,0,0;
+  --ion-card-background:            var(--bg-card);
+  --ion-item-background:            var(--bg-card);
+  --ion-toolbar-background:         rgba(242,242,247,0.85);
+  --ion-toolbar-color:              var(--label);
+  --ion-toolbar-border-color:       transparent;
+  --ion-tab-bar-background:         rgba(249,249,249,0.94);
+  --ion-tab-bar-border-color:       var(--separator);
+  --ion-tab-bar-color:              var(--label-3);
+  --ion-tab-bar-color-selected:     var(--sys-blue);
+  --ion-color-primary:              var(--sys-blue);
+  --ion-color-primary-rgb:          0,122,255;
+  --ion-color-primary-contrast:     #ffffff;
+  --ion-color-primary-shade:        #0062cc;
+  --ion-color-primary-tint:         #3395ff;
+  --ion-font-family:                -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ═══════════════════════════════════════
+   Dark Mode (class-controlled via .ion-palette-dark on <html>)
+═══════════════════════════════════════ */
+.ion-palette-dark {
+  --bg:               #000000;
+  --bg-card:          #1C1C1E;
+  --bg-card2:         #2C2C2E;
+  --bg-inset:         rgba(118,118,128,0.24);
+
+  --label:            #FFFFFF;
+  --label-2:          rgba(235,235,245,0.60);
+  --label-3:          rgba(235,235,245,0.30);
+  --label-4:          rgba(235,235,245,0.18);
+  --separator:        rgba(84,84,88,0.65);
+
+  --sys-blue:         #0A84FF;
+  --sys-green:        #30D158;
+  --sys-orange:       #FF9F0A;
+  --sys-pink:         #FF375F;
+  --sys-purple:       #BF5AF2;
+  --sys-red:          #FF453A;
+
+  --cal-track:        rgba(255,55,95,0.18);
+  --protein-track:    rgba(48,209,88,0.18);
+  --carbs-track:      rgba(255,159,10,0.18);
+  --fat-track:        rgba(191,90,242,0.18);
+
+  --ion-background-color:           #000000;
+  --ion-background-color-rgb:       0,0,0;
+  --ion-text-color:                 #FFFFFF;
+  --ion-text-color-rgb:             255,255,255;
+  --ion-card-background:            #1C1C1E;
+  --ion-item-background:            #1C1C1E;
+  --ion-toolbar-background:         rgba(28,28,30,0.85);
+  --ion-toolbar-color:              #FFFFFF;
+  --ion-tab-bar-background:         rgba(28,28,30,0.94);
+  --ion-tab-bar-border-color:       rgba(84,84,88,0.65);
+  --ion-tab-bar-color:              rgba(235,235,245,0.30);
+  --ion-tab-bar-color-selected:     #0A84FF;
+}
+
+/* ═══════════════════════════════════════
+   Global Resets
+═══════════════════════════════════════ */
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+
+ion-content { --background: var(--bg); }
+ion-page    { background: var(--bg); }
+
+/* Tab bar */
+ion-tab-bar {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+ion-tab-button {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0px;
+}
+
+/* Toolbar blur */
+ion-header { box-shadow: none; }
+ion-toolbar {
+  --border-color: transparent;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}

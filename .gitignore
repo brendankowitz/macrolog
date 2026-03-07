@@ -416,3 +416,18 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# iOS / Xcode
+DerivedData/
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+Pods/
+macrolog-ionic-react/ios/App/Podfile.lock
+
+# Node / Vite
+macrolog-ionic-react/node_modules/
+macrolog-ionic-react/dist/

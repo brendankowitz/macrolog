@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════
+   PROGRESS PAGE — Apple Health DNA
+═══════════════════════════════════════ */
+
+.p-safe { height: max(env(safe-area-inset-top), 44px); }
+
+/* Header */
+.p-header {
+  padding: 16px var(--pad) 0;
+}
+
+.p-large-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.37px;
+  color: var(--label);
+  margin: 0 0 16px;
+}
+
+/* Date nav */
+.p-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 2px 4px;
+  margin-bottom: 16px;
+}
+
+.p-date-btn {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--sys-blue);
+  font-size: 22px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.1s;
+}
+
+.p-date-btn:disabled { color: var(--label-3); cursor: default; }
+.p-date-btn:not(:disabled):active { background: var(--bg-inset); }
+
+.p-date-center { text-align: center; }
+
+.p-date-main {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--label);
+}
+
+.p-date-sub {
+  font-size: 12px;
+  color: var(--label-3);
+  margin-top: 1px;
+}
+
+/* Summary card */
+.p-summary {
+  margin: 0 var(--pad);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.p-summary-cal {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: var(--label);
+  line-height: 1;
+}
+
+.p-summary-label {
+  font-size: 15px;
+  color: var(--label-2);
+  margin: 4px 0 14px;
+}
+
+.p-progress-track {
+  height: 4px;
+  background: var(--cal-track);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.p-progress-fill {
+  height: 100%;
+  background: var(--cal-color);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.p-macro-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.p-macro-cell { text-align: center; }
+
+.p-macro-cell-val {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--label);
+}
+
+.p-macro-cell-name {
+  font-size: 12px;
+  color: var(--label-3);
+  margin-top: 2px;
+}
+
+.p-macro-cell-goal {
+  font-size: 11px;
+  color: var(--label-3);
+  margin-top: 1px;
+}
+
+/* Body */
+.p-body {
+  padding: 20px var(--pad) 40px;
+}
+
+/* Section title */
+.p-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  color: var(--label);
+  margin: 0 0 12px;
+  display: block;
+}
+
+/* Streak row */
+.p-streak-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.p-streak-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 18px 16px;
+}
+
+.p-streak-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.p-streak-icon {
+  font-size: 18px;
+}
+
+.p-streak-num {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--label);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.p-streak-label {
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+/* 7-day chart */
+.p-chart-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.p-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 96px;
+  margin-bottom: 8px;
+}
+
+.p-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  cursor: pointer;
+}
+
+.p-bar-track {
+  width: 100%;
+  background: var(--bg-inset);
+  border-radius: 4px;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  position: relative;
+}
+
+.p-bar-fill {
+  width: 100%;
+  background: var(--sys-blue);
+  border-radius: 4px;
+  transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
+  min-height: 2px;
+}
+
+.p-bar-fill.goal-met { background: var(--sys-green); }
+.p-bar-fill.empty    { background: var(--bg-inset); min-height: 4px; height: 4px !important; }
+
+.p-bar-col.selected .p-bar-fill { opacity: 1; }
+.p-bar-col:not(.selected) .p-bar-fill { opacity: 0.5; }
+.p-bar-col.selected .p-bar-track { background: var(--bg-inset); }
+
+.p-chart-labels {
+  display: flex;
+  gap: 6px;
+}
+
+.p-chart-label {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--label-3);
+}
+
+.p-chart-label.selected {
+  color: var(--sys-blue);
+  font-weight: 600;
+}
+
+/* Achievements */
+.p-ach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.p-ach-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  text-align: center;
+}
+
+.p-ach-card.locked { opacity: 0.38; }
+
+.p-ach-emoji {
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.p-ach-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+  margin-bottom: 3px;
+}
+
+.p-ach-desc {
+  font-size: 12px;
+  color: var(--label-2);
+  line-height: 1.4;
+}
+
+.p-ach-date {
+  font-size: 11px;
+  color: var(--label-3);
+  margin-top: 4px;
+}
+
+.p-bottom-pad { height: max(env(safe-area-inset-bottom), 20px); }

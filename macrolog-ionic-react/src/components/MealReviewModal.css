@@ -1,0 +1,349 @@
+/* ═══════════════════════════════════════
+   MEAL REVIEW MODAL — Apple Sheet style
+═══════════════════════════════════════ */
+
+.meal-review-modal {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
+  --background: var(--bg);
+}
+
+/* Toolbar overrides */
+.meal-review-modal ion-toolbar {
+  --background: rgba(249,249,249,0.94);
+  --border-width: 0 0 0.5px 0;
+  --border-color: var(--separator);
+}
+
+@media (prefers-color-scheme: dark) {
+  .meal-review-modal ion-toolbar {
+    --background: rgba(28,28,30,0.94);
+  }
+}
+
+.meal-review-modal ion-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.mr-container {
+  padding: 16px var(--pad) 40px;
+}
+
+/* Image */
+.mr-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  display: block;
+  margin-bottom: 16px;
+  background: var(--bg-inset);
+}
+
+/* Summary card */
+.mr-summary {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.mr-summary-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.mr-cal-num {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: var(--label);
+  line-height: 1;
+}
+
+.mr-cal-lbl {
+  font-size: 13px;
+  color: var(--label-2);
+  margin-top: 4px;
+}
+
+.mr-score-box {
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.mr-score-val {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--label);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mr-score-lbl {
+  font-size: 11px;
+  color: var(--label-3);
+  margin-top: 3px;
+}
+
+.mr-macros {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.mr-macro { text-align: center; }
+
+.mr-macro-val {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--label);
+}
+
+.mr-macro-lbl {
+  font-size: 11px;
+  color: var(--label-3);
+  margin-top: 3px;
+}
+
+/* Section labels */
+.mr-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  color: var(--label);
+  margin: 0 0 10px;
+  display: block;
+}
+
+/* Notes */
+.mr-notes {
+  width: 100%;
+  background: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: var(--ion-font-family);
+  color: var(--label);
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 24px;
+  -webkit-appearance: none;
+}
+
+.mr-notes:focus {
+  outline: 2px solid var(--sys-blue);
+  outline-offset: 0;
+}
+
+.mr-notes::placeholder { color: var(--label-3); }
+
+/* Food list */
+.mr-food-list {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+/* Food row */
+.mr-food-row {
+  padding: 12px 16px;
+  position: relative;
+}
+
+.mr-food-row + .mr-food-row::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 16px; right: 0;
+  height: 0.5px;
+  background: var(--separator);
+}
+
+.mr-food-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.mr-food-left { flex: 1; min-width: 0; }
+
+.mr-food-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label);
+  margin-bottom: 4px;
+}
+
+.mr-food-name-input {
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  background: var(--bg-inset);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--label);
+  font-family: var(--ion-font-family);
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+.mr-food-name-input:focus {
+  outline: 2px solid var(--sys-blue);
+}
+
+.mr-food-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mr-encouragement {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--label-2);
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.mr-food-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mr-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--bg-inset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--label-2);
+  font-size: 15px;
+  transition: opacity 0.1s;
+}
+
+.mr-action-btn:active { opacity: 0.6; }
+
+.mr-action-btn.danger {
+  background: rgba(255,59,48,0.1);
+  color: var(--sys-red, #FF3B30);
+}
+
+/* Nutrition grid */
+.mr-nutrition {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.mr-nut-cell { text-align: center; }
+
+.mr-nut-val {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--label);
+}
+
+.mr-nut-input {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 4px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--bg-inset);
+  color: var(--label);
+  font-family: var(--ion-font-family);
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+.mr-nut-input:focus {
+  outline: 2px solid var(--sys-blue);
+}
+
+.mr-nut-lbl {
+  font-size: 10px;
+  color: var(--label-3);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Amount row */
+.mr-amount-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.mr-amt-input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-inset);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--label);
+  font-family: var(--ion-font-family);
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+.mr-amt-input:focus {
+  outline: 2px solid var(--sys-blue);
+}
+
+/* Save button */
+.mr-save-btn {
+  width: 100%;
+  height: 50px;
+  background: var(--sys-blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-appearance: none;
+  transition: opacity 0.15s;
+}
+
+.mr-save-btn:active { opacity: 0.75; }
