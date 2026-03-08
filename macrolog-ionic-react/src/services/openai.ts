@@ -2,8 +2,8 @@ import { FoodItem } from '../types';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODELS = {
-  premium: 'qwen/qwen3.5-flash-02-23',
-  free: 'openrouter/auto:free',
+  premium: 'qwen/qwen3.5-flash',
+  free: 'openrouter/free',
 };
 
 interface ChatResponse {

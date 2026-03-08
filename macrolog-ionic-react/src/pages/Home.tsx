@@ -206,9 +206,11 @@ const HomePage: React.FC = () => {
               : <><IonIcon icon={cameraOutline} style={{ fontSize: 19 }} /> Quick Snap</>
             }
           </button>
-          <button className="h-log-btn-secondary" onClick={() => setDetailedOpen(true)} disabled={analyzing}>
-            <IonIcon icon={cameraOutline} style={{ fontSize: 17 }} /> Detailed
-          </button>
+          {settings?.analysis_mode !== 'free' && (
+            <button className="h-log-btn-secondary" onClick={() => setDetailedOpen(true)} disabled={analyzing}>
+              <IonIcon icon={cameraOutline} style={{ fontSize: 17 }} /> Detailed
+            </button>
+          )}
         </div>
 
         {/* Meals */}

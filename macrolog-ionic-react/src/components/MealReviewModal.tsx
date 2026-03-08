@@ -18,7 +18,7 @@ interface Props {
   imageUri: string;
   notes: string;
   onClose: () => void;
-  onSave: (items: FoodItem[], notes: string) => void;
+  onSave: (items: FoodItem[], notes: string) => Promise<void>;
   onDelete?: () => void;
 }
 
@@ -45,7 +45,19 @@ const MealReviewModal: React.FC<Props> = ({ isOpen, foodItems: init, imageUri, n
   const avgScore = Math.round(items.reduce((s, i) => s + i.healthScore, 0) / items.length);
   const scoreCol = getHealthScoreColor(avgScore);
 
-  const handleSave = () => { onSave(items, notes); onClose(); };
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await onSave(items, notes);
+      onClose();
+    } catch (e: any) {
+      alert(e?.message || 'Failed to save meal');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onClose} className="meal-review-modal">
@@ -65,8 +77,8 @@ const MealReviewModal: React.FC<Props> = ({ isOpen, foodItems: init, imageUri, n
                 <IonIcon icon={trashBinOutline} style={{ fontSize: 20 }} />
               </IonButton>
             )}
-            <IonButton fill="clear" strong onClick={handleSave} style={{ color: 'var(--sys-blue)' }}>
-              Save
+            <IonButton fill="clear" strong onClick={handleSave} disabled={saving} style={{ color: 'var(--sys-blue)' }}>
+              {saving ? 'Saving…' : 'Save'}
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -199,8 +211,8 @@ const MealReviewModal: React.FC<Props> = ({ isOpen, foodItems: init, imageUri, n
             })}
           </div>
 
-          <button className="mr-save-btn" onClick={handleSave}>
-            Save Meal
+          <button className="mr-save-btn" onClick={handleSave} disabled={saving}>
+            {saving ? 'Saving…' : 'Save Meal'}
           </button>
 
         </div>
