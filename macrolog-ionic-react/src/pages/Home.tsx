@@ -5,7 +5,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   flameOutline, cameraOutline, restaurantOutline,
   leafOutline, checkmarkCircleOutline, thumbsUpOutline, warningOutline,
-  chevronForwardOutline,
+  chevronForwardOutline, sparklesOutline, informationCircleOutline,
 } from 'ionicons/icons';
 import { StorageService } from '../services/storage';
 import { OpenAIService } from '../services/openai';
@@ -13,6 +13,7 @@ import { Meal, UserSettings, FoodItem } from '../types';
 import { formatTimeDisplay, getHealthScoreColor, getHealthRating, calculateStreak } from '../utils/helpers';
 import MealReviewModal from '../components/MealReviewModal';
 import DetailedLogModal from '../components/DetailedLogModal';
+import HealthScoreInfoSheet from '../components/HealthScoreInfoSheet';
 import './Home.css';
 
 /* ── Health icon helper ──────────────────────────────────────────── */
@@ -85,6 +86,7 @@ const HomePage: React.FC = () => {
   const [detailedOpen, setDetailedOpen] = useState(false);
   const [pending, setPending] = useState<{ base64Images: string[]; foodItems: FoodItem[] } | null>(null);
   const [selectedMeal, setSelectedMeal] = useState<import('../types').Meal | null>(null);
+  const [showScoreInfo, setShowScoreInfo] = useState(false);
 
   useEffect(() => { load(); }, []);
 
@@ -153,6 +155,10 @@ const HomePage: React.FC = () => {
 
   const todayMeals = meals.filter(m => new Date(m.timestamp).toDateString() === new Date().toDateString());
   const tot = { cal: todayMeals.reduce((s, m) => s + m.totalCalories, 0), pro: todayMeals.reduce((s, m) => s + m.totalProtein, 0), carb: todayMeals.reduce((s, m) => s + m.totalCarbs, 0), fat: todayMeals.reduce((s, m) => s + m.totalFat, 0) };
+  const avgDailyScore = todayMeals.length > 0
+    ? Math.round(todayMeals.reduce((s, m) => s + m.healthScore, 0) / todayMeals.length)
+    : 0;
+  const dailyScoreCol = getHealthScoreColor(avgDailyScore);
   const g = settings?.daily_goals ?? { calories: 2000, protein: 150, carbs: 200, fat: 65 };
   const streak = calculateStreak(meals);
   const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
@@ -196,6 +202,18 @@ const HomePage: React.FC = () => {
             <MacroRow label="Carbs"   value={tot.carb} goal={g.carbs}   color="var(--carbs-color)"   track="var(--carbs-track)" />
             <MacroRow label="Fat"     value={tot.fat}  goal={g.fat}     color="var(--fat-color)"     track="var(--fat-track)" />
           </div>
+          {todayMeals.length > 0 && (
+            <div className="h-health-score-row">
+              <div className="h-hs-icon" style={{ background: `${dailyScoreCol}18` }}>
+                <IonIcon icon={sparklesOutline} style={{ color: dailyScoreCol, fontSize: 15 }} />
+              </div>
+              <span className="h-hs-label">Today's Health Score</span>
+              <button className="h-hs-pill" style={{ background: `${dailyScoreCol}18`, color: dailyScoreCol }} onClick={() => setShowScoreInfo(true)}>
+                {avgDailyScore} · {getHealthRating(avgDailyScore)}
+                <IonIcon icon={informationCircleOutline} style={{ fontSize: 13, opacity: 0.7 }} />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Log buttons */}
@@ -283,6 +301,8 @@ const HomePage: React.FC = () => {
           onDelete={async () => { await StorageService.deleteMeal(selectedMeal.id); await load(); setSelectedMeal(null); }}
         />
       )}
+
+      <HealthScoreInfoSheet isOpen={showScoreInfo} onClose={() => setShowScoreInfo(false)} />
     </IonPage>
   );
 };

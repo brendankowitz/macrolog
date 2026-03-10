@@ -173,6 +173,50 @@
   min-width: 72px;
 }
 
+/* ── Daily health score row ──────────────── */
+.h-health-score-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 0.5px solid var(--separator);
+}
+
+.h-hs-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.h-hs-label {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--label);
+  flex: 1;
+}
+
+.h-hs-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  -webkit-appearance: none;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.h-hs-pill:active { opacity: 0.7; }
+
 /* ── Log buttons ─────────────────────────── */
 .h-log-row {
   display: flex;
